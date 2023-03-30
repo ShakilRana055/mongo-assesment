@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using MongoDBAssesmentDataAccess.IService;
-using MongoDBAssesmentDataAccess.Service;
 using MongoDBAssesmentDomain.Entity;
 
 namespace MongoDBAssesmentApp.Controllers

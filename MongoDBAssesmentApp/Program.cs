@@ -3,11 +3,10 @@ using MongoDB.Driver;
 using MongoDBAssesmentDataAccess.IService;
 using MongoDBAssesmentDataAccess.Service;
 using MongoDBAssesmentDomain.Entity;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region MognoRegion
+#region Mongo
 var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("DbConnection"));
 var databaseName = builder.Configuration.GetConnectionString("DatabaseName");
 builder.Services.AddSingleton<IMongoClient>(mongoClient);
