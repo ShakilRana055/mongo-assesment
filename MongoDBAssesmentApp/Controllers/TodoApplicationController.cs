@@ -2,6 +2,9 @@
 using MongoDB.Bson;
 using MongoDBAssesmentDataAccess.IService;
 using MongoDBAssesmentDomain.Entity;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
+using System.Text;
 
 namespace MongoDBAssesmentApp.Controllers
 {
@@ -20,6 +23,38 @@ namespace MongoDBAssesmentApp.Controllers
         {
             return Ok(await _todoService.GetAllAsync());
         }
+
+        private void TaskCreation(string queueName, string message)
+        {
+            var factory = new ConnectionFactory { HostName = "localhost" };
+            using var connection = factory.CreateConnection();
+            using var channel = connection.CreateModel();
+
+            channel.QueueDeclare(queue: queueName,
+                                 durable: true,
+                                 exclusive: false,
+                                 autoDelete: false,
+                                 arguments: null);
+            var body = Encoding.UTF8.GetBytes(message);
+
+            var properties = channel.CreateBasicProperties();
+            properties.Persistent = true;
+
+            channel.BasicPublish(exchange: string.Empty,
+                                 routingKey: queueName,
+                                 basicProperties: properties,
+                                 body: body);
+        }
+
+        [HttpGet("RabbitMQList")]
+        public async Task<IActionResult> RabbitMQList()
+        {
+            var result = await _todoService.GetAllAsync();
+            string jsonString = JsonConvert.SerializeObject(result);
+            TaskCreation("RabbitMQ-API-Call", jsonString);
+            return Ok(await _todoService.GetAllAsync());
+        }
+
         [HttpPost("Save")]
         public async Task<IActionResult> Save(ToDoApplicaton users)
         {
