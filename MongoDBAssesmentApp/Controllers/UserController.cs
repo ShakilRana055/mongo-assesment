@@ -23,7 +23,8 @@ namespace MongoDBAssesmentApp.Controllers
         [HttpGet("List")]
         public async Task<IActionResult> Get()
         {
-            return Ok(await userService.GetAllAsync());
+            IEnumerable<Users> result = await userService.GetAllAsync();
+            return result.Count() == 0 ? NoContent() :  Ok(result);
         }
         [HttpPost("Save")]
         public async Task<IActionResult> Save(Users users)

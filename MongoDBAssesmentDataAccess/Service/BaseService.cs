@@ -39,7 +39,6 @@ namespace MongoDBAssesmentDataAccess.Service
                 return await _collection.Find(_ => true).ToListAsync();
             return await _collection.Find(filter).ToListAsync();
         }
-
         private string GetId(T entity)
         {
             var property = typeof(T).GetProperty("Id");

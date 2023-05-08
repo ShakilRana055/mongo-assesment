@@ -5,3 +5,5 @@
 /MongoDBAssesmentDomain/obj
 /MongoDBAssesmentDomain/bin
 /.vs
+/MongoDBAssesmentXUnitTest/bin
+/MongoDBAssesmentXUnitTest/obj
