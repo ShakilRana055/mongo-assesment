@@ -1,9 +1,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 using MongoDBAssesmentApp.Controllers;
 using MongoDBAssesmentDataAccess.IService;
-using MongoDBAssesmentDataAccess.Service;
 using MongoDBAssesmentDomain.Entity;
 using Moq;
 
